@@ -336,6 +336,10 @@ height:100%;
 
 object-fit:cover;
 
+image-rendering:auto;
+
+display:block;
+
 }
 
 .type{
@@ -542,7 +546,7 @@ id="cardCost">
 
 <img
 id="cardImage"
-src="https://picsum.photos/400/300">
+src="https://picsum.photos/600/400">
 
 </div>
 
@@ -698,11 +702,19 @@ new FileReader()
 reader.onload =
 ev=>{
 
-document
-.getElementById(
+const img =
+document.getElementById(
 "cardImage"
 )
-.src =
+
+img.onload = ()=>{
+
+img.style.imageRendering =
+"auto"
+
+}
+
+img.src =
 ev.target.result
 
 }
@@ -718,12 +730,16 @@ html2canvas(
 document.getElementById("card"),
 {
 backgroundColor:null,
-useCORS:true
+useCORS:true,
+scale:3
 }
 ).then(canvas=>{
 
 const image =
-canvas.toDataURL("image/png")
+canvas.toDataURL(
+"image/png",
+1.0
+)
 
 const overlay =
 document.createElement("div")
@@ -771,6 +787,7 @@ font-size:16px;
 background:#38bdf8;
 color:white;
 width:auto;
+cursor:pointer;
 "
 >
 閉じる
