@@ -511,7 +511,7 @@ id="imageInput"
 accept="image/*">
 
 <button onclick="downloadCard()">
-PNG保存（iPhone対応）
+PNG保存
 </button>
 
 </div>
@@ -723,100 +723,74 @@ useCORS:true
 ).then(canvas=>{
 
 const image =
-canvas.toDataURL(
-"image/png"
-)
+canvas.toDataURL("image/png")
 
-const win =
-window.open("")
+const overlay =
+document.createElement("div")
 
-win.document.write(`
+overlay.style.position = "fixed"
+overlay.style.top = "0"
+overlay.style.left = "0"
+overlay.style.width = "100%"
+overlay.style.height = "100%"
+overlay.style.background = "rgba(0,0,0,0.92)"
+overlay.style.display = "flex"
+overlay.style.flexDirection = "column"
+overlay.style.justifyContent = "center"
+overlay.style.alignItems = "center"
+overlay.style.zIndex = "99999"
 
-<!DOCTYPE html>
+overlay.innerHTML = `
 
-<html>
-
-<head>
-
-<title>
-カード保存
-</title>
-
-<style>
-
-body{
-
-margin:0;
-
-background:#111;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
-
-height:100vh;
-
-overflow:hidden;
-
-}
-
-img{
-
-max-width:95%;
-
-max-height:95vh;
-
-border-radius:20px;
-
-box-shadow:
-0 0 30px rgba(255,255,255,.2);
-
-}
-
-.text{
-
-position:fixed;
-
-top:20px;
-
-left:50%;
-
-transform:translateX(-50%);
-
+<div style="
 color:white;
-
 font-size:18px;
-
+margin-bottom:20px;
 font-family:sans-serif;
-
-background:
-rgba(0,0,0,.5);
-
-padding:10px 16px;
-
-border-radius:12px;
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="text">
+">
 画像長押し → 「写真に保存」
 </div>
 
-<img src="${image}">
+<img
+src="${image}"
+style="
+max-width:92%;
+max-height:80%;
+border-radius:20px;
+box-shadow:0 0 30px rgba(255,255,255,.2);
+">
 
-</body>
+<button
+id="closeBtn"
+style="
+margin-top:25px;
+padding:12px 24px;
+border:none;
+border-radius:12px;
+font-size:16px;
+background:#38bdf8;
+color:white;
+width:auto;
+"
+>
+閉じる
+</button>
 
-</html>
+`
 
-`)
+document.body.appendChild(
+overlay
+)
+
+document
+.getElementById("closeBtn")
+.onclick = ()=>{
+
+document.body.removeChild(
+overlay
+)
+
+}
 
 })
 
